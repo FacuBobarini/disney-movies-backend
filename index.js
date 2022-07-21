@@ -2,10 +2,11 @@ const express = require('express');
 const dotenv = require('dotenv');
 const { initializeDatabase } = require('./database/database');
 
+dotenv.config();
+const dbConnection = initializeDatabase();
+
 async function bootstrap() {
   try {
-    dotenv.config();
-    const dbConnection = initializeDatabase();
     const app = express();
     app.use(express.json());
     app.listen(process.env.APP_PORT);
@@ -15,3 +16,5 @@ async function bootstrap() {
 }
 
 bootstrap();
+
+module.exports = { dbConnection };
