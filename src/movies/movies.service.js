@@ -1,8 +1,8 @@
-const { dbConnection } = require('../..');
+const { databaseConnection } = require('../../database/database');
 
 function findAllMovies(queryParams) {
   const { order, genre, ...where } = queryParams;
-  const dbModels = dbConnection.models;
+  const dbModels = databaseConnection.models;
   const findMovie = dbModels.Movie.findAll({
     where,
     attributes: ['title', 'image', 'creationDate'],
@@ -12,5 +12,14 @@ function findAllMovies(queryParams) {
 
   return findMovie;
 }
+function findMovieById(where) {
+  const dbModels = databaseConnection.models;
+  const findMovie = dbModels.Movie.findOne({
+    where,
+    include: { model: dbModels.Character },
+  });
 
-module.exports = { findAllMovies };
+  return findMovie;
+}
+
+module.exports = { findAllMovies, findMovieById };
