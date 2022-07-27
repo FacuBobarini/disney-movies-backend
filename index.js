@@ -1,6 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const { initializeDatabase } = require('./database/database');
+const { databaseConnection } = require('./database/database');
 const movieRouter = require('./routes/movie.routes');
 
 dotenv.config();
