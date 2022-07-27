@@ -3,7 +3,6 @@ const dotenv = require('dotenv');
 const { databaseConnection } = require('./database/database');
 const movieRouter = require('./routes/movie.routes');
 
-dotenv.config();
 async function bootstrap() {
   try {
     dotenv.config();
