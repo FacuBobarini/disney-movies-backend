@@ -132,9 +132,20 @@ async function findAndUpdateMovie(body, params) {
     deleteGenreUuid,
   };
 }
+
+async function findAndDeleteMovie(where) {
+  {
+    const dbModels = databaseConnection.models;
+    const deleteMovie = dbModels.Movie.destroy({
+      where: where,
+    });
+    return deleteMovie;
+  }
+}
 module.exports = {
   findAllMovies,
   findMovieById,
   createMovie,
   findAndUpdateMovie,
+  findAndDeleteMovie,
 };
