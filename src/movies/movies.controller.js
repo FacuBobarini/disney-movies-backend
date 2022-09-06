@@ -4,13 +4,13 @@ const { findAllMovies, findMovieById } = require('./movies.service');
 async function getMovies(req, res) {
   try {
     const errors = validationResult(req);
-
     if (!errors.isEmpty()) {
-      res.status(422).json({ errors: errors.array() });
-      return;
+      return res.status(400).json({ errors: errors.array() });
     }
-    findMovie = await findAllMovies(req.query);
-    res.status(200).json(findMovie);
+    const findMovie = await findAllMovies(req.query);
+    findMovie[0]
+      ? res.status(200).json(findMovie)
+      : res.status(404).json('Not Found');
   } catch (error) {
     res.status(500).json(error);
   }
@@ -19,13 +19,13 @@ async function getMovies(req, res) {
 async function getMovieById(req, res) {
   try {
     const errors = validationResult(req);
-
     if (!errors.isEmpty()) {
-      res.status(422).json({ errors: errors.array() });
-      return;
+      return res.status(400).json({ errors: errors.array() });
     }
-    findMovie = await findMovieById(req.params);
-    res.status(200).json(findMovie);
+    const findMovie = await findMovieById(req.params);
+    findMovie
+      ? res.status(200).json(findMovie)
+      : res.status(404).json('Not Found');
   } catch (error) {
     res.status(500).json(error);
   }
@@ -44,4 +44,19 @@ async function addMovie(req, res) {
   }
 }
 
-module.exports = { getMovies, getMovieById, addMovie };
+async function updateMovie(req, res) {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const Movie = await findAndUpdateMovie(req.body, req.params);
+    Movie.updateMovie[0]
+      ? res.status(200).json(Movie)
+      : res.status(404).json('Not Found');
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+module.exports = { getMovies, getMovieById, addMovie, updateMovie };
