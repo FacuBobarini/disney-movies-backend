@@ -57,4 +57,84 @@ async function createMovie(req) {
   return { newMovie, characterMovie, genreMovie };
 }
 
-module.exports = { findAllMovies, findMovieById, createMovie };
+async function findAndUpdateMovie(body, params) {
+  let genreMovie = [];
+  let characterMovie = [];
+  let deleteCharacterMovie = [];
+  let deleteGenreUuid = [];
+  const dbModels = databaseConnection.models;
+  const updateMovie = await dbModels.Movie.update(
+    {
+      image: body.image,
+      title: body.title,
+      creationDate: body.creationDate,
+      rate: body.rate,
+    },
+    {
+      where: {
+        uuid: params.uuid,
+      },
+    }
+  );
+  body.charUuid
+    ? (characterMovie = await Promise.all(
+        body.charUuid.map(async (uuidChar) => {
+          const newCharacterMovie = await dbModels.characterMovies.create({
+            MovieUuid: params.uuid,
+            CharacterUuid: uuidChar,
+          });
+          return newCharacterMovie.dataValues;
+        })
+      ))
+    : (characterMovie = null);
+  body.genreUuid
+    ? (genreMovie = await Promise.all(
+        body.genreUuid.map(async (uuidGenre) => {
+          const newGenreMovie = await dbModels.moviesGenre.create({
+            MovieUuid: params.uuid,
+            GenreUuid: uuidGenre,
+          });
+          return newGenreMovie.dataValues;
+        })
+      ))
+    : (genreMovie = null);
+  body.deleteCharUuid
+    ? (deleteCharacterMovie = await Promise.all(
+        body.deleteCharUuid.map(async (uuidChar) => {
+          const delCharacterMovie = await dbModels.characterMovies.destroy({
+            where: {
+              MovieUuid: params.uuid,
+              CharacterUuid: uuidChar,
+            },
+          });
+          return delCharacterMovie.dataValues;
+        })
+      ))
+    : (deleteCharacterMovie = null);
+  body.deleteGenreUuid
+    ? (deleteGenreUuid = await Promise.all(
+        body.deleteGenreUuid.map(async (uuidGenre) => {
+          const delGenreMovie = await dbModels.moviesGenre.destroy({
+            where: {
+              MovieUuid: params.uuid,
+              GenreUuid: uuidGenre,
+            },
+          });
+          return delGenreMovie;
+        })
+      ))
+    : (deleteGenreUuid = null);
+  return {
+    updateMovie,
+    characterMovie,
+    genreMovie,
+    deleteCharacterMovie,
+    deleteGenreUuid,
+  };
+}
+module.exports = {
+  findAllMovies,
+  findMovieById,
+  createMovie,
+  findAndUpdateMovie,
+};
