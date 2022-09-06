@@ -59,4 +59,25 @@ async function updateMovie(req, res) {
   }
 }
 
-module.exports = { getMovies, getMovieById, addMovie, updateMovie };
+async function deleteMovie(req, res) {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const Movie = await findAndDeleteMovie(req.params);
+    Movie
+      ? res.status(200).json(req.params.uuid)
+      : res.status(404).json('Not Found');
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+module.exports = {
+  getMovies,
+  getMovieById,
+  addMovie,
+  updateMovie,
+  deleteMovie,
+};
