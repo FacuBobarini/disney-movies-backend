@@ -1,6 +1,7 @@
 const {
   validateMovies,
   validateMoviesById,
+  addMovieInputValidator,
 } = require('../src/middleware/validations.movies');
 const {
   getMovies,
