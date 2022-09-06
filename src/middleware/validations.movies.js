@@ -27,4 +27,25 @@ function addMovieInputValidator() {
     body('genreUuid.*').exists({ checkFalsy: true }).isUUID(4).optional(),
   ];
 }
-module.exports = { validateMovies, validateMoviesById, addMovieInputValidator };
+function updateMovieInputValidator() {
+  return [
+    param('uuid').exists({ checkFalsy: true }).isUUID(4),
+    body('image').exists({ checkFalsy: true }).isURL().optional(),
+    body('title').exists({ checkFalsy: true }).optional(),
+    body('creationDate').exists({ checkFalsy: true }).isDate().optional(),
+    body('rate')
+      .exists({ checkFalsy: true })
+      .isInt({ min: 1, max: 5 })
+      .optional(),
+    body('deleteCharUuid.*').exists({ checkFalsy: true }).isUUID(4).optional(),
+    body('deleteGenreUuid.*').exists({ checkFalsy: true }).isUUID(4).optional(),
+    body('charUuid.*').exists({ checkFalsy: true }).isUUID(4).optional(),
+    body('genreUuid.*').exists({ checkFalsy: true }).isUUID(4).optional(),
+  ];
+}
+module.exports = {
+  validateMovies,
+  validateMoviesById,
+  addMovieInputValidator,
+  updateMovieInputValidator,
+};
