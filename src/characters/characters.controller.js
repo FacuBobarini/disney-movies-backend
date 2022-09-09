@@ -1,5 +1,8 @@
 const { validationResult } = require('express-validator');
-const { findAllCharacters } = require('./characters.service');
+const {
+  findAllCharacters,
+  findCharacterById,
+} = require('./characters.service');
 
 async function getCharacters(req, res) {
   try {
@@ -17,4 +20,19 @@ async function getCharacters(req, res) {
   }
 }
 
-module.exports = { getCharacters };
+async function getCharacterById(req, res) {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const findCharacter = await findCharacterById(req.params);
+    findCharacter
+      ? res.status(200).json(findCharacter)
+      : res.status(404).json('Not Found');
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+module.exports = { getCharacters, getCharacterById };

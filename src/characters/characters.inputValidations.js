@@ -8,4 +8,8 @@ function getCharactersInputValidation() {
   );
 }
 
-module.exports = { getCharactersInputValidation };
+function uuidParamsInputValidator() {
+  return [param('uuid').exists({ checkFalsy: true }).isUUID(4)];
+}
+
+module.exports = { getCharactersInputValidation, uuidParamsInputValidator };
