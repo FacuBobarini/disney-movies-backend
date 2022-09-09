@@ -7,9 +7,9 @@ async function getMovies(req, res) {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const findMovie = await findAllMovies(req.query);
-    findMovie[0]
-      ? res.status(200).json(findMovie)
+    const findMovies = await findAllMovies(req.query);
+    findMovies[0]
+      ? res.status(200).json(findMovies)
       : res.status(404).json('Not Found');
   } catch (error) {
     res.status(500).json(error);
