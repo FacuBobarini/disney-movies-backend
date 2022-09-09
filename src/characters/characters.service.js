@@ -12,4 +12,12 @@ function findAllCharacters(queryparams) {
   return findCharacters;
 }
 
-module.exports = { findAllCharacters };
+function findCharacterById(where) {
+  const findMovie = dbModels.Character.findOne({
+    where,
+    include: { model: dbModels.Movie },
+  });
+
+  return findMovie;
+}
+module.exports = { findAllCharacters, findCharacterById };
