@@ -1,9 +1,9 @@
 const {
-  validateMovies,
-  validateMoviesById,
   addMovieInputValidator,
   updateMovieInputValidator,
-} = require('../src/middleware/validations.movies');
+  uuidParamsInputValidator,
+  getMoviesInputValidator,
+} = require('../src/movies/validations.movies');
 const {
   getMovies,
   getMovieById,
@@ -13,8 +13,8 @@ const {
 } = require('../src/movies/movies.controller');
 const router = require('express').Router();
 
-router.get('/movies', validateMovies(), getMovies);
-router.get('/movies/:uuid', validateMoviesById(), getMovieById);
+router.get('/movies', getMoviesInputValidator(), getMovies);
+router.get('/movies/:uuid', uuidParamsInputValidator(), getMovieById);
 router.post('/movies', addMovieInputValidator(), addMovie);
 router.patch('/movies/:uuid', updateMovieInputValidator(), updateMovie);
 router.delete('/movies/:uuid', uuidParamsInputValidator(), deleteMovie);
