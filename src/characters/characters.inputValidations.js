@@ -12,4 +12,19 @@ function uuidParamsInputValidator() {
   return [param('uuid').exists({ checkFalsy: true }).isUUID(4)];
 }
 
-module.exports = { getCharactersInputValidation, uuidParamsInputValidator };
+function addCharacterInputValidator() {
+  return [
+    body('image').exists({ checkFalsy: true }).isURL().optional(),
+    body('name').exists({ checkFalsy: true }).optional(),
+    body('age').exists({ checkFalsy: true }).isNumeric().optional(),
+    body('weight').exists({ checkFalsy: true }).isNumeric().optional(),
+    body('history').exists({ checkFalsy: true }).isDate().optional(),
+    body('movieUuid.*').exists({ checkFalsy: true }).isUUID(4).optional(),
+  ];
+}
+
+module.exports = {
+  getCharactersInputValidation,
+  uuidParamsInputValidator,
+  addCharacterInputValidator,
+};
