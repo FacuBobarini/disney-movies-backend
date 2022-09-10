@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator');
 const {
   findAllCharacters,
   findCharacterById,
+  createCharacter,
 } = require('./characters.service');
 
 async function getCharacters(req, res) {
@@ -35,4 +36,17 @@ async function getCharacterById(req, res) {
   }
 }
 
-module.exports = { getCharacters, getCharacterById };
+async function addCharacter(req, res) {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const newCharacter = await createCharacter(req.body);
+    res.status(200).json(newCharacter);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+module.exports = { getCharacters, getCharacterById, addCharacter };

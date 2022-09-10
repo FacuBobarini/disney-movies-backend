@@ -15,6 +15,9 @@ const characterModel = {
   age: {
     type: DataTypes.STRING,
   },
+  weight: {
+    type: DataTypes.STRING,
+  },
   history: {
     type: DataTypes.STRING,
   },
