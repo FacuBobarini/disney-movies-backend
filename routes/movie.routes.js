@@ -3,7 +3,7 @@ const {
   updateMovieInputValidator,
   uuidParamsInputValidator,
   getMoviesInputValidator,
-} = require('../src/movies/validations.movies');
+} = require('../src/movies/movies.inputValidations');
 const {
   getMovies,
   getMovieById,
