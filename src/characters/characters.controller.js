@@ -4,6 +4,7 @@ const {
   findCharacterById,
   createCharacter,
   findAndUpdateCharacter,
+  findAndDeleteCharacter,
 } = require('./characters.service');
 
 async function getCharacters(req, res) {
@@ -65,9 +66,24 @@ async function updateCharacter(req, res) {
   }
 }
 
+async function deleteCharacter(req, res) {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const Character = await findAndDeleteCharacter(req.params);
+    Character
+      ? res.status(200).json(req.params.uuid)
+      : res.status(404).json('Not Found');
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
 module.exports = {
   getCharacters,
   getCharacterById,
   addCharacter,
   updateCharacter,
+  deleteCharacter,
 };

@@ -22,7 +22,7 @@ function findCharacterById(where) {
 
 async function createCharacter(req) {
   let characterMovie = [];
-  const newCharacter = await dbModels.Movie.create({
+  const newCharacter = await dbModels.Character.create({
     image: req.image,
     name: req.name,
     age: req.age,
@@ -92,9 +92,20 @@ async function findAndUpdateCharacter(body, params) {
     deleteCharacterMovie,
   };
 }
+
+async function findAndDeleteCharacter(where) {
+  {
+    const deleteCharacter = dbModels.Character.destroy({
+      where: where,
+    });
+    return deleteCharacter;
+  }
+}
+
 module.exports = {
   findAllCharacters,
   findCharacterById,
   createCharacter,
   findAndUpdateCharacter,
+  findAndDeleteCharacter,
 };
