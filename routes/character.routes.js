@@ -3,6 +3,7 @@ const {
   getCharacterById,
   addCharacter,
   updateCharacter,
+  deleteCharacter,
 } = require('../src/characters/characters.controller');
 const {
   getCharactersInputValidation,
@@ -20,5 +21,6 @@ router.patch(
   updateCharacterInputValidator(),
   updateCharacter
 );
+router.delete('/characters/:uuid', uuidParamsInputValidator(), deleteCharacter);
 
 module.exports = router;
