@@ -3,6 +3,7 @@ const {
   findAllCharacters,
   findCharacterById,
   createCharacter,
+  findAndUpdateCharacter,
 } = require('./characters.service');
 
 async function getCharacters(req, res) {
@@ -49,4 +50,24 @@ async function addCharacter(req, res) {
   }
 }
 
-module.exports = { getCharacters, getCharacterById, addCharacter };
+async function updateCharacter(req, res) {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const Character = await findAndUpdateCharacter(req.body, req.params);
+    Character.updateCharacter[0]
+      ? res.status(200).json(Character)
+      : res.status(404).json('Not Found');
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+module.exports = {
+  getCharacters,
+  getCharacterById,
+  addCharacter,
+  updateCharacter,
+};
