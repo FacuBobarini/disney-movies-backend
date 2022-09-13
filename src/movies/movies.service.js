@@ -62,7 +62,6 @@ async function findAndUpdateMovie(body, params) {
   let characterMovie = [];
   let deleteCharacterMovie = [];
   let deleteGenreUuid = [];
-  const dbModels = databaseConnection.models;
   const updateMovie = await dbModels.Movie.update(
     {
       image: body.image,
@@ -135,7 +134,6 @@ async function findAndUpdateMovie(body, params) {
 
 async function findAndDeleteMovie(where) {
   {
-    const dbModels = databaseConnection.models;
     const deleteMovie = dbModels.Movie.destroy({
       where: where,
     });
