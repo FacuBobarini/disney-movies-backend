@@ -1,4 +1,4 @@
-const { query, body, param } = require('express-validator');
+const { query } = require('express-validator');
 
 function getCharactersInputValidation() {
   return (
@@ -18,7 +18,7 @@ function addCharacterInputValidator() {
     body('name').exists({ checkFalsy: true }).optional(),
     body('age').exists({ checkFalsy: true }).isNumeric().optional(),
     body('weight').exists({ checkFalsy: true }).isNumeric().optional(),
-    body('history').exists({ checkFalsy: true }).isDate().optional(),
+    body('history').exists({ checkFalsy: true }).optional(),
     body('movieUuid.*').exists({ checkFalsy: true }).isUUID(4).optional(),
   ];
 }
@@ -29,7 +29,7 @@ function updateCharacterInputValidator() {
     body('name').exists({ checkFalsy: true }).optional(),
     body('age').exists({ checkFalsy: true }).isNumeric().optional(),
     body('weight').exists({ checkFalsy: true }).isNumeric().optional(),
-    body('history').exists({ checkFalsy: true }).isDate().optional(),
+    body('history').exists({ checkFalsy: true }).optional(),
     body('movieUuid.*').exists({ checkFalsy: true }).isUUID(4).optional(),
     body('deletemovieUuid.*').exists({ checkFalsy: true }).isUUID(4).optional(),
   ];
