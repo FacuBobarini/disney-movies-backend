@@ -1,4 +1,4 @@
-const { query } = require('express-validator');
+const { query, body, param } = require('express-validator');
 
 function getCharactersInputValidation() {
   return (
