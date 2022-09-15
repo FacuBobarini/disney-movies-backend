@@ -2,7 +2,7 @@ const { Sequelize } = require('sequelize');
 const { characterModel } = require('./models/character');
 const { genreModel } = require('./models/genre');
 const { movieModel } = require('./models/movie');
-const { userModel } = require('./models/users');
+const { userModel } = require('./models/user');
 const dotenv = require('dotenv');
 dotenv.config();
 
