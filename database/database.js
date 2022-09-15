@@ -2,6 +2,7 @@ const { Sequelize } = require('sequelize');
 const { characterModel } = require('./models/character');
 const { genreModel } = require('./models/genre');
 const { movieModel } = require('./models/movie');
+const { userModel } = require('./models/users');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -18,6 +19,7 @@ const databaseConnection = new Sequelize(
 const movie = databaseConnection.define('Movie', movieModel);
 const character = databaseConnection.define('Character', characterModel);
 const genre = databaseConnection.define('Genre', genreModel);
+const user = databaseConnection.define('User', userModel);
 
 movie.belongsToMany(character, { through: 'characterMovies' });
 character.belongsToMany(movie, { through: 'characterMovies' });
