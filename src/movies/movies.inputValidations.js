@@ -1,4 +1,4 @@
-const { query, param } = require('express-validator');
+const { query, param, body } = require('express-validator');
 
 function getMoviesInputValidator() {
   const order = ['ASC', 'DESC'];
