@@ -8,4 +8,11 @@ function addUserInputValidator() {
   ];
 }
 
-module.exports = { addUserInputValidator };
+function loginUserInputValidator() {
+  return [
+    body('username').exists({ checkFalsy: true }),
+    body('password').exists({ checkFalsy: true }),
+  ];
+}
+
+module.exports = { addUserInputValidator, loginUserInputValidator };
