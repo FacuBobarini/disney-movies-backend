@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-const { createUser } = require('./users.service');
+const { createUser, accesUser } = require('./users.service');
 
 async function addUser(req, res) {
   try {
@@ -14,4 +14,19 @@ async function addUser(req, res) {
   }
 }
 
-module.exports = { addUser };
+async function loginUser(req, res) {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const user = await accesUser(req.body);
+    user.login
+      ? res.status(200).json(user.user)
+      : res.status(401).json('Wrong Credentials!');
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+module.exports = { addUser, loginUser };
