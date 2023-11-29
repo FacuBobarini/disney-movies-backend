@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/FacuBobarini/alkemy-disney-movies-backend#readme",
   "dependencies": {
-    "crypto-js": "^4.1.1",
+    "crypto-js": "^4.2.0",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-validator": "^6.14.2",
